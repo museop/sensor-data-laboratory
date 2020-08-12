@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block header %}
+<h1>{% block title %}Upload file{% endblock title %}</h1>
+{% endblock header %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+  <div class="custom-file">
+    <input autocomplete="off" type="file" name="file" id="file" class="custom-file-input" required>
+    <label class="custom-file-label" for="file">Choose File</label>
+  </div>
+  <div class="form-group pt-4">
+    <select class="form-control" id="filetype" name="filetype">
+      <option selected>File type</option>
+      <option value="sensor">Sensor</option>
+      <option value="hrm">HRM</option>
+      <option value="gps">GPS</option>
+      <option value="none">None</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea autocomplete="off" class="form-control" row="5" name="description" id="description">
+    </textarea>
+  </div>
+  <div class="pt-4">
+    <button type="submit" class="btn btn-primary">Upload</button>
+  </div>
+</form>
+
+<script>
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
+{% endblock content %}

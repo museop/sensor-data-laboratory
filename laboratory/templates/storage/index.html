@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block header %}
+<h1>{% block title %} Data {% endblock title %}</h1>
+{% endblock header %}
+
+{% block content %}
+  {% if g.user %}
+  <div class="content">
+    <a class="btn btn-primary float-right" href="{{ url_for('storage.upload') }}"">Upload</a>
+  </div>
+  {% endif %}
+  <table class="table">
+    <thread>
+      <tr>
+        <th>File name</th>
+        <th>Date uploaded</th>
+        <th>Uploader</th>
+        <th>File type</th>
+        <th>Download</th>
+      </tr>
+    </thread>
+    <tbody>
+      {% for file in files.items %}
+      <tr>
+        <td>{{file.filename}}</td>
+        <td>{{file.date_uploaded}}</td>
+        <td><a class="mr-2" href="{{ url_for('storage.user_files', username=file.uploader.username) }}">{{file.uploader.username}}</a></td>
+        <td>{{file.type.name}}</td>
+        <td><a href="{{ url_for('storage.download_file', file_id=file.id) }}">download</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% for page_num in files.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+      {% if files.page == page_num %}
+        <a class="btn btn-info mb-4" href="{{ url_for('storage.index', page=page_num) }}">{{ page_num }}</a>
+      {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('storage.index', page=page_num) }}">{{ page_num }}</a>
+      {% endif %}
+    {% else %}
+      ...
+    {% endif %}
+  {% endfor %}
+{% endblock content %}

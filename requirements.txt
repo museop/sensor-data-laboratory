@@ -1,0 +1,10 @@
+sqlalchemy
+flask~=1.1.2
+flask_admin
+flask_sqlalchemy
+flask_migrate
+flask_paginate
+flask_script
+pytz~=2020.1
+click~=7.1.2
+Werkzeug~=1.0.1
